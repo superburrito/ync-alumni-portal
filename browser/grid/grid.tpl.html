@@ -1,0 +1,108 @@
+<div class="grid__container" 
+	layout="column" 
+	layout-align="none center"
+>
+	<md-content 
+		class="grid__toolbar"
+		md-theme="darkorange" 
+		layout="row" 
+		layout-padding>
+		<md-button 
+			ng-show="!myProfile.class"
+			ui-sref="update"
+		>
+			Add My Profile
+		</md-button>
+		<md-button 
+			ng-show="myProfile.class"
+			ui-sref="update"
+		>
+			Update My Profile
+		</md-button>
+		<md-button 
+			ng-show="myProfile.class"
+			ng-click="removeProfile()"
+		>
+			Remove My Profile
+		</md-button>
+	</md-content>
+	<br/>
+	<md-input-container class="grid__search" md-theme="orange">
+		<label>Searching for someone? Enter relevant keywords here.</label>
+		<input ng-model="searchText">
+	</md-input-container>
+	<md-content 
+		class="md-padding" 
+		layout="row" 
+		layout-wrap 
+		layout-align="center"
+	>
+		<md-card
+			class="grid__card"
+			ng-repeat="user in users | filter:searchText"
+			ng-show="user.class"
+			flex-xs
+			flex-sm="45"
+			flex-gt-sm="30"
+			layout="column"
+			layout-align="start"
+		>
+			<img 
+				ng-src="{{user.src}}" 
+				class="grid__card--src md-card-image"
+			/>
+			<md-card-title 
+				class="grid__card--title"
+			>
+				<md-card-title-text>
+					<span class="md-headline">
+						{{user.name}}
+					</span>
+				</md-card-title-text>
+			</md-card-title>
+			<md-card-content 
+				layout="column" 
+				layout-align="start" 
+				flex
+			>
+				<h3>
+					"{{user.description}}"
+				</h3>
+				<p>
+					<span ng-show="user.role && user.employer">
+					{{user.role}} at {{user.employer}}
+					<br/>
+					</span>
+					Class of {{user.class}}, {{user.major}} major
+					<br/>	
+					Currently in {{user.city}}
+					<br/>
+					<br/>
+					<md-divider></md-divider>
+					<br/>
+					Once a part of:
+					<br/>
+					<span ng-repeat="membership in user.memberships">{{membership.club}}<br/></span>
+				</p>
+			</md-card-content>
+			<md-card-actions 
+				ng-show="user.fbId != myProfile.fbId"
+				layout="row" 
+				layout-align="center"
+			>
+				<!-- Facebook Button -->
+				<md-button 
+					ng-click="triggerFBDialog(user.fbId)"
+				>
+					Facebook
+				</md-button>
+				<!-- LinkedIn Button -->
+				<md-button 
+					ng-show="user.li != myProfile.li" 
+					ng-href="{{user.li}}">
+					LinkedIn 
+				</md-button>
+			</md-card-actions>
+		</md-card>
+	</md-content>
+</div>

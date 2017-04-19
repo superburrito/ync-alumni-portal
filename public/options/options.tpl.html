@@ -1,0 +1,98 @@
+<div class="options__container" layout="column">
+	<div
+		class="options__slide"
+		layout="column"
+		ng-style="{'background-image': 'url({{bg}})'}"
+	>
+		<div 
+			class="options__slide--translucence"
+			layout="column"
+			layout-align="center center"
+		>
+			<span class="options__slide--title">
+				Reaching Out
+			</span>
+		</div>
+	</div>
+	<div 
+		layout="column" 
+		ng-cloak 
+		class="md-inline-form"
+		flex
+	>
+		<md-content
+			md-theme="orange"
+			layout="column"
+			layout-align="none center"
+			layout-padding
+		>
+			<div class="options__body--text">
+				<p>
+					If you wish to include (or update) your details, submit them here!
+				</p>
+			</div>
+			<div>
+				<form name="userForm" class="options__form">
+					<div layout-gt-xs="row">
+						<md-input-container flex>
+							<label>Share a one-liner</label>
+							<input ng-model="inputDesc" required>
+						</md-input-container>
+					</div>
+					<div layout-gt-xs="row">
+						<md-input-container flex-gt-xs="40">
+							<label>Current Occupation</label>
+							<input ng-model="inputRole" required>
+						</md-input-container>
+						<md-input-container flex-gt-xs="60">
+							<label>Current Employer</label>
+							<input ng-model="inputEmployer" required>
+						</md-input-container>
+					</div>
+					<div layout-gt-xs="row">
+						<md-input-container flex-gt-xs="100">
+							<label>LinkedIn URL</label>
+							<input ng-model="inputLinkedIn">
+						</md-input-container>
+					</div>
+					<div layout-gt-xs="row">
+						<md-input-container flex-gt-xs="33">
+							<label>Class of ...</label>
+							<md-select ng-model="inputClass" required>
+					        	<md-option value="2017">2017</md-option>
+					            <md-option value="2018">2018</md-option>
+								<md-option value="2019">2019</md-option>
+							</md-select>
+						</md-input-container>
+						<md-input-container flex-gt-xs="33">
+							<label>Major</label>
+					        <md-select ng-model="inputMajor" required>
+					            <md-option value="PPE">PPE</md-option>
+					            <md-option value="Psychology">Psychology</md-option>
+								<md-option value="Economics">Economics</md-option>
+								<md-option value="Anthropology">Anthropology</md-option>
+								<md-option value="Philosophy">Philosophy</md-option>
+					        	<md-option value="Physical Sci.">Physical Sci.</md-option>
+					            <md-option value="Life Sci.">Life Sci.</md-option>
+					            <md-option value="A&H">A&H</md-option>
+					        	<md-option value="MCS">MCS</md-option>
+					        </md-select>
+						</md-input-container>
+						<md-input-container flex-gt-xs="33">
+							<label>Current City</label>
+							<input ng-model="inputCity">
+						</md-input-container>
+					</div>					
+					<div layout="column" layout-align="none center">
+						<md-input-container class="md-block">
+        					<md-checkbox ng-model="inputCoordAgree" required>
+          						I wish to add my current coordinates to the map.
+        					</md-checkbox>
+        				</md-input-container>
+						<md-button type="submit" ng-click="submit()">Submit</md-button>
+					</div>
+				</form>
+			</div>
+		</md-content>
+	</div>
+</div>

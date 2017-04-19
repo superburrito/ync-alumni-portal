@@ -1,0 +1,36 @@
+<div class="map__container" layout="column" flex>
+	<md-content 
+		md-theme="darkorange" 
+		layout="row" 
+		layout-padding>
+		<md-button 
+			ng-show="!myProfile.class"
+			ui-sref="update"
+		>
+			Add My Profile
+		</md-button>
+		<md-button ng-click="findAndPanToCurrLoc()">
+			Centre on Current Location
+		</md-button>
+		<md-button 
+			ng-show="myProfile.class"
+			ng-click="updateUserCoords()"
+		>
+			Update My Marker
+		</md-button>
+		<md-button 
+			ng-show="myProfile.lat && myProfile.lng"
+			ng-click="removeMarker()"
+		>
+			Remove My Marker
+		</md-button>
+		<md-button 
+			ng-show="myProfile.class"
+			ng-click="removeProfile()"
+		>
+			Remove My Profile
+		</md-button>
+	</md-content>
+	<div id="mapDisplay" flex>
+	</div>
+</div>
