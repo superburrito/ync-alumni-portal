@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=development nodemon --watch server -e html,js,css server/server.js",
-    "devdeploy": "NODE_ENV=development forever start server/server.js"
+    "devdeploy": "NODE_ENV=development forever start server/server.js",
+    "stagingdeploy": "NODE_ENV=staging forever start server/server.js"
   },
   "author": "Yao Hui Chua",
   "license": "ISC",
