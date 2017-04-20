@@ -14,8 +14,7 @@ app.controller("MainCtrl", ($rootScope, $scope, $state) => {
  	}
 });
 
-app.config(($locationProvider, $httpProvider) => {
-	$locationProvider.html5Mode(true);
+app.config(($httpProvider) => {
 	$httpProvider.interceptors.push('APIInterceptor');
 })
 
