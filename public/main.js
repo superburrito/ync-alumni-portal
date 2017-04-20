@@ -119,20 +119,6 @@ app.config(function ($stateProvider) {
 });
 "use strict";
 
-app.controller("HomeCtrl", function ($scope, $rootScope) {
-	$scope.slides = [{
-		src: '/media/yalenus1.jpg',
-		title: "A Community of Learning"
-	}, {
-		src: '/media/yalenus2.jpg',
-		title: 'In Asia'
-	}, {
-		src: '/media/yalenus3.jpg',
-		title: 'For the World'
-	}];
-});
-"use strict";
-
 app.controller("GridCtrl", function ($scope, $rootScope, GeneralFac, $state) {
 	// Get all users
 	function displayAllUsers() {
@@ -150,10 +136,26 @@ app.controller("GridCtrl", function ($scope, $rootScope, GeneralFac, $state) {
 	loadMyProfile();
 
 	$scope.removeProfile = function () {
-		GeneralFac.unpubliciseUser().then(displayAllUsers).then(loadMyProfile);
+		GeneralFac.unpubliciseUser().then(function () {
+			return GeneralFac.updateUserClubs([]);
+		}).then(displayAllUsers).then(loadMyProfile);
 	};
 
 	$scope.triggerFBDialog = GeneralFac.triggerFBDialog;
+});
+"use strict";
+
+app.controller("HomeCtrl", function ($scope, $rootScope) {
+	$scope.slides = [{
+		src: '/media/yalenus1.jpg',
+		title: "A Community of Learning"
+	}, {
+		src: '/media/yalenus2.jpg',
+		title: 'In Asia'
+	}, {
+		src: '/media/yalenus3.jpg',
+		title: 'For the World'
+	}];
 });
 'use strict';
 
@@ -245,12 +247,14 @@ app.controller('MapCtrl', function ($scope, MapStyleFac, $rootScope, $mdDialog, 
 
 	$scope.removeProfile = function () {
 		clearMarkersSync();
-		GeneralFac.unpubliciseUser().then(loadMarkers).then(loadMyProfile);
+		GeneralFac.unpubliciseUser().then(function () {
+			return GeneralFac.updateUserClubs([]);
+		}).then(loadMarkers).then(loadMyProfile);
 	};
 
 	$scope.removeMarker = function () {
 		clearMarkersSync();
-		GeneralFac.removeUserCoords().then(loadMarkers).then(loadMyProfile);
+		GeneralFactory.updateUserCoords({}).then(loadMarkers).then(loadMyProfile);
 	};
 
 	// Load Markers
@@ -506,10 +510,24 @@ app.controller('ProfileCtrl', function ($mdDialog, $scope, $rootScope, GeneralFa
 	$scope.currProfile = $rootScope.currProfile;
 	$scope.triggerFBDialog = GeneralFac.triggerFBDialog;
 });
-'use strict';
+"use strict";
 
 app.factory("GeneralFac", function ($rootScope, $mdDialog, $http) {
 	var GeneralFactory = {};
+
+	// Clubs as an arr of strs ["YIRPA","Basketball",...]
+	GeneralFactory.updateUserClubs = function (clubStrs) {
+		return $http.post('/api/user/clubs', { clubStrs: clubStrs }).then(function (res) {
+			return res.data;
+		}).then(function (data) {
+			if (data && data.success) {
+				return "Success";
+			} else {
+				GeneralFactory.errorDialog();
+				return "Failure";
+			}
+		}, GeneralFactory.errorDialog);
+	};
 
 	GeneralFactory.getAllUsers = function () {
 		return $http.get('/api/user').then(function (res) {
@@ -548,13 +566,9 @@ app.factory("GeneralFac", function ($rootScope, $mdDialog, $http) {
 
 	// Unpublicise user's details
 	GeneralFactory.unpubliciseUser = function () {
-		return $mdDialog.show($mdDialog.confirm().parent(angular.element(document.body)).clickOutsideToClose(true).title('Hey there!').textContent('Are you sure you wish to delete your profile?').ariaLabel('delete profile').ok('Yes').cancel('No')).then(function () {
+		return $mdDialog.show($mdDialog.confirm().parent(angular.element(document.body)).clickOutsideToClose(true).title('Hey there!').textContent('Are you sure you wish to delete your public profile?').ariaLabel('delete public profile').ok('Yes').cancel('No')).then(function () {
 			return GeneralFactory.updateUser({});
 		});
-	};
-
-	GeneralFactory.removeUserCoords = function () {
-		return GeneralFactory.updateUserCoords({});
 	};
 
 	GeneralFactory.triggerFBDialog = function (toId) {
@@ -607,6 +621,7 @@ app.controller("UpdateCtrl", function ($scope, $state, GeneralFac) {
 	$scope.bg = '/media/yalenus_options.jpg';
 
 	$scope.submit = function () {
+		convertClubs();
 		if ($scope.inputCoordAgree) {
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(addProfile, navFailureDialog);
@@ -619,6 +634,23 @@ app.controller("UpdateCtrl", function ($scope, $state, GeneralFac) {
 		}
 	};
 
+	function convertClubs() {
+		if ($scope.inputUser.clubsStr && $scope.inputUser.clubsStr.length > 0) {
+			var clubStrs = $scope.inputUser.clubsStr.split(",");
+			$scope.inputUser.clubStrs = clubStrs.map(function (clubStr) {
+				if (clubStr[0] == " ") {
+					return clubStr.slice(1);
+				} else if (clubStr[clubStr.length - 1] == " ") {
+					return clubStr.slice(0, -1);
+				} else {
+					return clubStr;
+				}
+			});
+		} else {
+			$scope.inputUser.clubStrs = [];
+		}
+	}
+
 	function addProfile(posObj) {
 		if (posObj && posObj.coords) {
 			$scope.inputUser.lat = posObj.coords.latitude;
@@ -628,6 +660,8 @@ app.controller("UpdateCtrl", function ($scope, $state, GeneralFac) {
 			$scope.nextState = "grid";
 		}
 		GeneralFac.updateUser($scope.inputUser).then(function () {
+			return GeneralFac.updateUserClubs($scope.inputUser.clubStrs);
+		}).then(function () {
 			$state.go($scope.nextState);
 		}, GeneralFac.errorDialog);
 	}

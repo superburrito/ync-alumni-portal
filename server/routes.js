@@ -20,7 +20,7 @@ router.get('/auth', AuthHandler.reentry);
 router.get('/api/user', UserHandler.getAllUsers);
 router.post('/api/user', UserHandler.updateUser);
 router.post('/api/user/coords', UserHandler.updateUserCoords);
-
+router.post('/api/user/clubs', UserHandler.updateUserClubs);
 
 
 module.exports = router;

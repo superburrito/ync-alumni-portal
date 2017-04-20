@@ -3,14 +3,8 @@
 		md-theme="darkorange" 
 		layout="row" 
 		layout-padding>
-		<md-button 
-			ng-show="!myProfile.class"
-			ui-sref="update"
-		>
-			Add My Profile
-		</md-button>
 		<md-button ng-click="findAndPanToCurrLoc()">
-			Centre on Current Location
+			Centre Map
 		</md-button>
 		<md-button 
 			ng-show="myProfile.class"

@@ -6,6 +6,26 @@ const Membership = db.model('membership');
 
 const UserHandler = {};
 
+UserHandler.updateUserClubs = (req, res, next) => {
+	const clubs = req.body.clubStrs.map((clubStr) => {
+		return {
+			club: clubStr,
+			user_id: req.decoded.id
+		}
+	})
+	return Membership.destroy({
+		where: { user_id: req.decoded.id }
+	})
+	.then((numRowsDel) => {
+		console.log("Deleted membership entries: " + numRowsDel);
+		return Membership.bulkCreate(clubs);
+	})
+	.then(() => {
+		return res.status(200).send({ success: true });
+	})
+	.catch(next);
+}
+
 UserHandler.getAllUsers = (req, res, next) => {
 	return User.findAll({
 		include: [{

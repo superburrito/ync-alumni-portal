@@ -6,19 +6,9 @@
 		class="grid__toolbar"
 		md-theme="darkorange" 
 		layout="row" 
-		layout-padding>
-		<md-button 
-			ng-show="!myProfile.class"
-			ui-sref="update"
-		>
-			Add My Profile
-		</md-button>
-		<md-button 
-			ng-show="myProfile.class"
-			ui-sref="update"
-		>
-			Update My Profile
-		</md-button>
+		layout-padding
+		ng-show="myProfile.class"
+	>
 		<md-button 
 			ng-show="myProfile.class"
 			ng-click="removeProfile()"

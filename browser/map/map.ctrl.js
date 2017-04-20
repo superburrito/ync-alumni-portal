@@ -42,12 +42,15 @@ app.controller('MapCtrl', ($scope, MapStyleFac, $rootScope, $mdDialog, GeneralFa
 	$scope.removeProfile = () => {
 		clearMarkersSync();
 		GeneralFac.unpubliciseUser()
+		.then(() => {
+			return GeneralFac.updateUserClubs([]);
+		})
 		.then(loadMarkers).then(loadMyProfile);
 	}
 
 	$scope.removeMarker = () => {
 		clearMarkersSync();
-		GeneralFac.removeUserCoords()
+		GeneralFactory.updateUserCoords({})
 		.then(loadMarkers).then(loadMyProfile);
 	}
 

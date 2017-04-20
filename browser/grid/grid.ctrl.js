@@ -15,9 +15,11 @@ app.controller("GridCtrl", ($scope, $rootScope, GeneralFac, $state) => {
 	}
 	loadMyProfile();
 
-
 	$scope.removeProfile = () => {
 		GeneralFac.unpubliciseUser()
+		.then(() => {
+			return GeneralFac.updateUserClubs([]);
+		})
 		.then(displayAllUsers).then(loadMyProfile);
 	}
 

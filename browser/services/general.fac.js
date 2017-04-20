@@ -1,6 +1,20 @@
 app.factory("GeneralFac", ($rootScope, $mdDialog, $http) => {
 	const GeneralFactory = {};
 
+	// Clubs as an arr of strs ["YIRPA","Basketball",...]
+	GeneralFactory.updateUserClubs = (clubStrs) => {
+		return $http.post('/api/user/clubs', { clubStrs: clubStrs })
+		.then((res) => res.data)
+		.then((data) => {
+			if (data && data.success) {
+				return "Success";
+			} else {
+				GeneralFactory.errorDialog();
+				return "Failure"; 
+			}
+		}, GeneralFactory.errorDialog);		
+	}
+
 	GeneralFactory.getAllUsers = () => {
 		return $http.get('/api/user')
 		.then((res) => res.data)
@@ -10,7 +24,7 @@ app.factory("GeneralFac", ($rootScope, $mdDialog, $http) => {
 			} else {
 				return [];
 			}
-		}, GeneralFactory.errorDialog)
+		}, GeneralFactory.errorDialog);
 	}
 
 	// Updates and returns user's profile
@@ -43,8 +57,8 @@ app.factory("GeneralFac", ($rootScope, $mdDialog, $http) => {
 				.parent(angular.element(document.body))
 				.clickOutsideToClose(true)
 				.title('Hey there!')
-				.textContent('Are you sure you wish to delete your profile?')
-				.ariaLabel('delete profile')
+				.textContent('Are you sure you wish to delete your public profile?')
+				.ariaLabel('delete public profile')
 				.ok('Yes')
 				.cancel('No')
     	)
@@ -53,10 +67,6 @@ app.factory("GeneralFac", ($rootScope, $mdDialog, $http) => {
     	});
 	}
  
-	GeneralFactory.removeUserCoords = () => {
-		return GeneralFactory.updateUserCoords({});
-	}
-
 	GeneralFactory.triggerFBDialog = (toId) => {
 		FB.ui({
   			method: 'send',
