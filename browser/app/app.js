@@ -14,7 +14,8 @@ app.controller("MainCtrl", ($rootScope, $scope, $state) => {
  	}
 });
 
-// Interceptor which transforms ress and reqs for auth purposes 
-app.config(function($httpProvider){
+app.config(($locationProvider, $httpProvider) => {
+	$locationProvider.html5Mode(true);
 	$httpProvider.interceptors.push('APIInterceptor');
-});
+})
+

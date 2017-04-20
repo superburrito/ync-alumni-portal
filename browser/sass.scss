@@ -1,3 +1,7 @@
+$view-small: "screen and (max-width: 600px)";
+$view-medium: "screen and (max-width: 1150px)";
+
+
 html {
 	overflow: initial !important;
 }
@@ -8,14 +12,18 @@ body {
 	top: 0px !important; 
 	font-family: 'Lato', sans-serif;
 }
-
 md-card-title {
     flex: initial !important;
 }
 
-
-._md-nav-button-text {
-	font-size: 1.2em;
+.navbar {
+	&__label {
+		&--home, &--logout {
+			@media #{$view-small} {
+				display: none;
+			} 
+		}
+	}
 }
 
 .grid {
@@ -37,6 +45,10 @@ md-card-title {
 
 	&__toolbar {
 		width: 100vw;
+		&--button {
+			padding: 2px 8px 2px 8px;
+			margin: 2px 8px 2px 8px;
+		}
 	}
 }
 
@@ -58,13 +70,22 @@ md-card-title {
 		}
 		&--title {
 			font-weight: bold;
-			font-size: 6em;
+			font-size: 5em;
 			text-align: center;
+			@media #{$view-medium} {
+				font-size: 3em;
+			}
+			@media #{$view-small} {
+				font-size: 1.8em;
+			} 
 		}
 		&--text {
 			margin-top: 0;
 			margin-bottom: 0.25em;
 			font-size: 1.5em;
+			@media #{$view-small} {
+				font-size: 1em;
+			}
 		}
 	}
 }
@@ -121,15 +142,40 @@ md-card-title {
 		}
 		&--title {
 			font-weight: bold;
-			font-size: 6em;
+			font-size: 5em;
 			text-align: center;
-		}
-		&--text {
-			margin-top: 0;
-			margin-bottom: 0.25em;
-			font-size: 1.5em;
+			@media #{$view-medium} {
+				font-size: 3em;
+			}
+			@media #{$view-small} {
+				font-size: 1.8em;
+			} 
 		}
 	}
+}
+
+.map {
+	&__options {
+		&--button {
+			padding: 2px 8px 2px 8px;
+			margin: 2px 8px 2px 8px;
+			@media #{$view-small} {
+				display: none;
+			} 
+		}
+		&--menu {
+			display: none;
+			@media #{$view-small} {
+				display: inline-block;
+			}  
+		}
+	}
+}
+
+md-sidenav {
+	width: 200px !important;
+	min-width: 200px;
+	max-width: 200px;
 }
 
 #mapDisplay {
@@ -137,7 +183,6 @@ md-card-title {
 	top: 0;
 	bottom: 0;
 }
-
 
 .profile {
 	&__src {

@@ -10,6 +10,14 @@
 		ng-show="myProfile.class"
 	>
 		<md-button 
+			class="grid__toolbar--button"
+			ng-show="!myProfile.class"
+			ui-sref="update"
+		>
+			Add My Profile
+		</md-button>
+		<md-button 
+			class="grid__toolbar--button"
 			ng-show="myProfile.class"
 			ng-click="removeProfile()"
 		>
@@ -31,8 +39,7 @@
 			class="grid__card"
 			ng-repeat="user in users | filter:searchText"
 			ng-show="user.class"
-			flex-xs
-			flex-sm="45"
+			flex-sm
 			flex-gt-sm="30"
 			layout="column"
 			layout-align="start"

@@ -16,8 +16,8 @@ app.controller("MainCtrl", function ($rootScope, $scope, $state) {
 	};
 });
 
-// Interceptor which transforms ress and reqs for auth purposes 
-app.config(function ($httpProvider) {
+app.config(function ($locationProvider, $httpProvider) {
+	$locationProvider.html5Mode(true);
 	$httpProvider.interceptors.push('APIInterceptor');
 });
 'use strict';
@@ -119,6 +119,20 @@ app.config(function ($stateProvider) {
 });
 "use strict";
 
+app.controller("HomeCtrl", function ($scope, $rootScope) {
+	$scope.slides = [{
+		src: '/media/yalenus1.jpg',
+		title: "A Community of Learning"
+	}, {
+		src: '/media/yalenus2.jpg',
+		title: 'In Asia'
+	}, {
+		src: '/media/yalenus3.jpg',
+		title: 'For the World'
+	}];
+});
+"use strict";
+
 app.controller("GridCtrl", function ($scope, $rootScope, GeneralFac, $state) {
 	// Get all users
 	function displayAllUsers() {
@@ -142,20 +156,6 @@ app.controller("GridCtrl", function ($scope, $rootScope, GeneralFac, $state) {
 	};
 
 	$scope.triggerFBDialog = GeneralFac.triggerFBDialog;
-});
-"use strict";
-
-app.controller("HomeCtrl", function ($scope, $rootScope) {
-	$scope.slides = [{
-		src: '/media/yalenus1.jpg',
-		title: "A Community of Learning"
-	}, {
-		src: '/media/yalenus2.jpg',
-		title: 'In Asia'
-	}, {
-		src: '/media/yalenus3.jpg',
-		title: 'For the World'
-	}];
 });
 'use strict';
 
@@ -204,7 +204,17 @@ app.controller('LandingCtrl', function ($scope, $state, $rootScope, $mdDialog, $
 });
 'use strict';
 
-app.controller('MapCtrl', function ($scope, MapStyleFac, $rootScope, $mdDialog, GeneralFac, $state, $http) {
+app.controller('MapCtrl', function ($scope, MapStyleFac, $rootScope, $mdDialog, GeneralFac, $state, $http, $mdSidenav) {
+
+	$scope.openSidenav = function () {
+		$mdSidenav('left').toggle();
+	};
+
+	function shutSidenav() {
+		if ($mdSidenav('left').isOpen()) {
+			$mdSidenav('left').close();
+		}
+	}
 
 	// Draw info from storage
 	function loadMyProfile() {
@@ -220,6 +230,8 @@ app.controller('MapCtrl', function ($scope, MapStyleFac, $rootScope, $mdDialog, 
 
 	// Load map
 	var map = new google.maps.Map(document.getElementById('mapDisplay'), options);
+
+	// Toolbar commands
 	// If GPS available, pan to current location
 	$scope.currPos = null;
 	function panToCurrLoc() {
@@ -236,6 +248,7 @@ app.controller('MapCtrl', function ($scope, MapStyleFac, $rootScope, $mdDialog, 
 				panToCurrLoc();
 			});
 		}
+		shutSidenav();
 	};
 	$scope.findAndPanToCurrLoc();
 
@@ -243,6 +256,7 @@ app.controller('MapCtrl', function ($scope, MapStyleFac, $rootScope, $mdDialog, 
 	$scope.updateUserCoords = function () {
 		clearMarkersSync();
 		GeneralFac.updateUserCoords($scope.currPos).then(loadMarkers).then(loadMyProfile);
+		shutSidenav();
 	};
 
 	$scope.removeProfile = function () {
@@ -250,11 +264,13 @@ app.controller('MapCtrl', function ($scope, MapStyleFac, $rootScope, $mdDialog, 
 		GeneralFac.unpubliciseUser().then(function () {
 			return GeneralFac.updateUserClubs([]);
 		}).then(loadMarkers).then(loadMyProfile);
+		shutSidenav();
 	};
 
 	$scope.removeMarker = function () {
 		clearMarkersSync();
-		GeneralFactory.updateUserCoords({}).then(loadMarkers).then(loadMyProfile);
+		GeneralFac.updateUserCoords({}).then(loadMarkers).then(loadMyProfile);
+		shutSidenav();
 	};
 
 	// Load Markers

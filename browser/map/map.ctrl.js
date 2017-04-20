@@ -1,4 +1,14 @@
-app.controller('MapCtrl', ($scope, MapStyleFac, $rootScope, $mdDialog, GeneralFac, $state, $http) => {
+app.controller('MapCtrl', ($scope, MapStyleFac, $rootScope, $mdDialog, GeneralFac, $state, $http, $mdSidenav) => {
+
+	$scope.openSidenav = () => {
+		$mdSidenav('left').toggle();
+	}
+	
+ 	function shutSidenav () {
+ 		if ($mdSidenav('left').isOpen()) {
+ 			$mdSidenav('left').close();
+ 		}
+ 	}
 
 	// Draw info from storage
 	function loadMyProfile() {
@@ -14,6 +24,8 @@ app.controller('MapCtrl', ($scope, MapStyleFac, $rootScope, $mdDialog, GeneralFa
 	
 	// Load map
 	const map = new google.maps.Map(document.getElementById('mapDisplay'), options);
+
+	// Toolbar commands
 	// If GPS available, pan to current location
 	$scope.currPos = null;
 	function panToCurrLoc () { map.panTo($scope.currPos); }
@@ -28,6 +40,7 @@ app.controller('MapCtrl', ($scope, MapStyleFac, $rootScope, $mdDialog, GeneralFa
 				panToCurrLoc();
 			})
 		} 
+		shutSidenav();
 	}
 	$scope.findAndPanToCurrLoc();
 
@@ -36,7 +49,7 @@ app.controller('MapCtrl', ($scope, MapStyleFac, $rootScope, $mdDialog, GeneralFa
 		clearMarkersSync();
 		GeneralFac.updateUserCoords($scope.currPos)
 		.then(loadMarkers).then(loadMyProfile);
-
+		shutSidenav();
 	}
 
 	$scope.removeProfile = () => {
@@ -46,12 +59,14 @@ app.controller('MapCtrl', ($scope, MapStyleFac, $rootScope, $mdDialog, GeneralFa
 			return GeneralFac.updateUserClubs([]);
 		})
 		.then(loadMarkers).then(loadMyProfile);
+		shutSidenav();
 	}
 
 	$scope.removeMarker = () => {
 		clearMarkersSync();
-		GeneralFactory.updateUserCoords({})
+		GeneralFac.updateUserCoords({})
 		.then(loadMarkers).then(loadMyProfile);
+		shutSidenav();
 	}
 
 	// Load Markers

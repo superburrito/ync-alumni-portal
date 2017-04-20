@@ -14,29 +14,35 @@
 	<script src="main.js"></script>
 	<link href="style.css" rel="stylesheet">
 
+	<!-- Material icons -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
 	<!-- Google Maps dependencies -->
 	<script src="https://maps.google.com/maps/api/js?key=AIzaSyDgXvzUG9XSxezxRYld6T53KFUmJnnQJI0"></script>
 
 	<!-- Google Style dependencies --> 
 	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	
-
+	<base href="/">
 </head>
 <body ng-app="ynanApp" ng-controller="MainCtrl" layout="column">
-	
 	<md-nav-bar 
 		class="navbar"
 		md-selected-nav-item="currentNavItem"
 		ng-hide="state.$current.hideNavbar"
-		aria-label="navbar"
-	>
-  		<md-nav-item class="navbar__label" md-nav-click="stateGoer('home')" name="home" value="home">Home</md-nav-item>
+		aria-label="navbar">
+  		<md-nav-item class="navbar__label--home" md-nav-click="stateGoer('home')" name="home" value="home">Home</md-nav-item>
   		<md-nav-item md-nav-click="stateGoer('map')" name="map">Map</md-nav-item>
 		<md-nav-item md-nav-click="stateGoer('grid')" name="grid">Grid</md-nav-item>
-  		<md-nav-item md-nav-click="stateGoer('update')" name="update">Add/Update</md-nav-item>
+  		<md-nav-item md-nav-click="stateGoer('update')" name="update">Update</md-nav-item>
   		<span flex> </span>
-  		<md-nav-item md-nav-click="logout()" name="logout">Logout</md-nav-item>
+  		<md-nav-item 
+  			class="navbar__label--logout" 
+  			md-nav-click="logout()" 
+  			name="logout">
+  			Logout
+  		</md-nav-item>
   	</md-nav-bar>	
 	
 	<div class="main" layout="column" flex>

@@ -1,24 +1,90 @@
 <div class="map__container" layout="column" flex>
+	<md-sidenav
+		md-theme="darkorange"
+		class="map__sidenav md-sidenav-left"
+        md-component-id="left"
+        layout="column">
+        <md-content layout="column">
+        	<md-list flex>
+        		<md-list-item 
+					class="map__sidenav--item"
+					ng-click="findAndPanToCurrLoc()"
+				>
+					Centre Map
+				</md-list-item>
+				<md-list-item 
+					class="map__sidenav--item"
+					ng-show="!myProfile.class"
+					ui-sref="update"
+				>
+					Add My Profile
+				</md-list-item>
+				<md-list-item
+					class="map__sidenav--button"
+					ng-show="myProfile.class"
+					ng-click="updateUserCoords()"
+				>
+					Update My Marker
+				</md-list-item>
+				<md-list-item 
+					class="map__sidenav--button"
+					ng-show="myProfile.lat && myProfile.lng"
+					ng-click="removeMarker()"
+				>
+					Remove My Marker
+				</md-list-item>
+				<md-list-item 
+					class="map__sidenav--button"
+					ng-show="myProfile.class"
+					ng-click="removeProfile()"
+				>
+					Remove My Profile
+				</md-list-item>
+			</md-list>
+		</md-content>
+	</md-sidenav>
 	<md-content 
+		class="map__options"
 		md-theme="darkorange" 
 		layout="row" 
 		layout-padding>
-		<md-button ng-click="findAndPanToCurrLoc()">
+		<md-button 
+			class="md-icon-button map__options--menu"
+			ng-click="openSidenav()"
+		>
+			<md-icon md-font-set="material-icons">
+				menu
+			</md-icon>
+		</md-button>
+		<md-button 
+			class="map__options--button"
+			ng-click="findAndPanToCurrLoc()"
+		>
 			Centre Map
 		</md-button>
 		<md-button 
+			class="map__options--button"
+			ng-show="!myProfile.class"
+			ui-sref="update"
+		>
+			Add My Profile
+		</md-button>
+		<md-button
+			class="map__options--button"
 			ng-show="myProfile.class"
 			ng-click="updateUserCoords()"
 		>
 			Update My Marker
 		</md-button>
 		<md-button 
+			class="map__options--button"
 			ng-show="myProfile.lat && myProfile.lng"
 			ng-click="removeMarker()"
 		>
 			Remove My Marker
 		</md-button>
 		<md-button 
+			class="map__options--button"
 			ng-show="myProfile.class"
 			ng-click="removeProfile()"
 		>
