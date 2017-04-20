@@ -1,5 +1,17 @@
 app.controller('LandingCtrl', ($scope, $state, $rootScope, $mdDialog, $http) => {
 	
+	if (localStorage.getItem('ynan-ynanToken') != null) {
+		$http.get('/auth')
+		.then((res) => res.data)
+		.then((data) => {
+			if (data && data.success) {
+				$state.go('home');
+			} else {
+				$state.go('landing');
+			}
+		})
+	}
+
 	$scope.bg = "/media/yalenus_landing2.jpg";
 	
 	$scope.triggerFBLogin = () => {
@@ -30,7 +42,7 @@ app.controller('LandingCtrl', ($scope, $state, $rootScope, $mdDialog, $http) => 
 				localStorage.setItem("ynan-fbToken", JSON.stringify(data.fbToken));
 				// Save profile
 				localStorage.setItem("ynan-profile", JSON.stringify(data.user));
-				$state.go("home");
+				$state.go('home');
 			} else {
 				loginFailureDialog();
 			} 

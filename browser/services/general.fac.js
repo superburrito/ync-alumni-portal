@@ -1,10 +1,14 @@
 app.factory("GeneralFac", ($rootScope, $mdDialog, $http) => {
 	const GeneralFactory = {};
 
+	function resToDataFilter (res) {
+		return res.data;
+	}
+	
 	// Clubs as an arr of strs ["YIRPA","Basketball",...]
 	GeneralFactory.updateUserClubs = (clubStrs) => {
 		return $http.post('/api/user/clubs', { clubStrs: clubStrs })
-		.then((res) => res.data)
+		.then(resToDataFilter)
 		.then((data) => {
 			if (data && data.success) {
 				return "Success";
@@ -17,7 +21,7 @@ app.factory("GeneralFac", ($rootScope, $mdDialog, $http) => {
 
 	GeneralFactory.getAllUsers = () => {
 		return $http.get('/api/user')
-		.then((res) => res.data)
+		.then(resToDataFilter)
 		.then((data) => {
 			if (data && data.success) {
 				return data.users;	
@@ -30,7 +34,7 @@ app.factory("GeneralFac", ($rootScope, $mdDialog, $http) => {
 	// Updates and returns user's profile
 	GeneralFactory.updateUser = (userObj) => {
 		return $http.post('/api/user', userObj)
-		.then((res) => res.data)
+		.then(resToDataFilter)
 		.then((data) => {
 			if (data && data.success) {
 				localStorage.setItem('ynan-profile', JSON.stringify(data.user));
@@ -41,7 +45,7 @@ app.factory("GeneralFac", ($rootScope, $mdDialog, $http) => {
 
 	GeneralFactory.updateUserCoords = (coordsObj) => {
 		return $http.post('/api/user/coords', coordsObj)
-		.then((res) => res.data)
+		.then(resToDataFilter)
 		.then((data) => {
 			if (data && data.success) {
 				localStorage.setItem('ynan-profile', JSON.stringify(data.user));
@@ -87,7 +91,5 @@ app.factory("GeneralFac", ($rootScope, $mdDialog, $http) => {
 				.ok("OK")
     	);
     }
-
-
 	return GeneralFactory;
 })

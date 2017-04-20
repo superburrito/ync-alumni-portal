@@ -86,7 +86,7 @@ AuthHandler.authenticate = (req, res) => {
 AuthHandler.reentry = (req, res, next) => {
 	return User.findOne({ where: { fbId: req.decoded.fbId } })
 	.then((user) => {
-		res.status(200).send({
+		return res.status(200).send({
 			// In a typical login, fbToken and hToken would exist,
 			// but this is a re-entry, so we don't bother tokenising 
 			// the response
