@@ -182,6 +182,9 @@ md-sidenav {
 	height: 85vh;
 	top: 0;
 	bottom: 0;
+	@media #{$view-small} {
+		height: 78vh;
+	}
 }
 
 .profile {
