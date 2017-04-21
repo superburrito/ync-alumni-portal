@@ -65,7 +65,7 @@
 				<h3>
 					"{{user.description}}"
 				</h3>
-				<p>
+				<p class="grid__card--info">
 					<span ng-show="user.role && user.employer">
 					{{user.role}} at {{user.employer}}
 					<br/>
@@ -81,7 +81,6 @@
 					<br/>
 					<span ng-repeat="membership in user.memberships">{{membership.club}}<br/></span>
 				</p>
-				<br/>
 			</md-card-content>
 			<md-card-actions 
 				ng-show="user.fbId != myProfile.fbId"

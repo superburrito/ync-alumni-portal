@@ -41,6 +41,9 @@ md-card-title {
 		&--title {
 			padding-bottom: 0.25em;
 		}
+		&--info {
+			margin-bottom: 1em;
+		}
 	}
 
 	&__toolbar {
@@ -211,6 +214,7 @@ md-sidenav {
 	&__info {
 		width: 75%;
 		margin-top: 0.25em;
+		margin-bottom: 1em;
 	}
 
 	&__button {
