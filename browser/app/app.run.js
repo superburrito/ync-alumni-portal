@@ -1,5 +1,4 @@
 app.run(($window, $rootScope, $state) => {
-
 	// Initialise FB JS SDK
 	$window.fbAsyncInit = function() {
 		FB.init({
@@ -10,7 +9,6 @@ app.run(($window, $rootScope, $state) => {
 		});
 		FB.AppEvents.logPageView();   
 	};
-
 	(function(d, s, id){
 	 var js, fjs = d.getElementsByTagName(s)[0];
 	 if (d.getElementById(id)) {return;}
@@ -19,4 +17,11 @@ app.run(($window, $rootScope, $state) => {
 	 fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
    
+	// Register listeners
+	$rootScope.$on('unauthenticated', (ev) => {
+		$state.go('landing');
+	})
+	$rootScope.$on('authenticated', (ev) => {
+		$state.go('home');
+	})
 });
