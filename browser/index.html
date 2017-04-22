@@ -32,10 +32,14 @@
   		<md-nav-item class="navbar__label--home" md-nav-click="stateGoer('home')" name="home" value="home">Home</md-nav-item>
   		<md-nav-item md-nav-click="stateGoer('map')" name="map">Map</md-nav-item>
 		<md-nav-item md-nav-click="stateGoer('grid')" name="grid">Grid</md-nav-item>
-  		<md-nav-item md-nav-click="stateGoer('update')" name="update">Update</md-nav-item>
+  		<md-nav-item 
+  		  	class="navbar__label--update" 
+  			md-nav-click="stateGoer('update')" 
+  			name="update">
+  			Update
+  		</md-nav-item>
   		<span flex> </span>
   		<md-nav-item 
-  			class="navbar__label--logout" 
   			md-nav-click="logout()" 
   			name="logout">
   			Logout

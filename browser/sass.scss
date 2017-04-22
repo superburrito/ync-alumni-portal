@@ -18,7 +18,7 @@ md-card-title {
 
 .navbar {
 	&__label {
-		&--home, &--logout {
+		&--home, &--update {
 			@media #{$view-small} {
 				display: none;
 			} 
@@ -209,6 +209,9 @@ md-sidenav {
 	text-align: center;
 	&__desc {
 		font-size: 2em;
+		@media #{$view-small} {
+			font-size: 1.3em;
+		} 
 		margin-bottom: 0.25em;
 	}
 	&__info {
