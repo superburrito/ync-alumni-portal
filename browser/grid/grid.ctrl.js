@@ -3,7 +3,6 @@ app.controller("GridCtrl", ($scope, $rootScope, GeneralFac, $state) => {
 	function displayAllUsers () {
 		GeneralFac.getAllUsers()
 		.then((users) => {
-			console.table(users);
 			$scope.users = users;
 		})
 	}

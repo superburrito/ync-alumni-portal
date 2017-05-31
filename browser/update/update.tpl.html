@@ -33,6 +33,7 @@
 				<form 
 					name="userForm" 
 					class="update__form"
+					ng-submit="userForm.$valid && submit()"
 				>
 					<div layout="column" layout-gt-xs="row">
 						<md-input-container flex>
@@ -100,7 +101,7 @@
           						I wish to mark my current coordinates on the Yale-NUS Alumni Network Map.
         					</md-checkbox>
         				</md-input-container>
-						<md-button type="submit" ng-click="submit()">Submit</md-button>
+						<md-button type="submit">Submit</md-button>
 					</div>
 				</form>
 			</div>

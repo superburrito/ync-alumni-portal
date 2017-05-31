@@ -80,7 +80,6 @@ app.controller('MapCtrl', ($scope, MapStyleFac, $rootScope, $mdDialog, GeneralFa
 		}
 		return GeneralFac.getAllUsers()
 		.then((users) => {
-			console.table(users);
 			let ctr = 0;
 			users.forEach((user) => {
 				if(user.lat && user.lng){
