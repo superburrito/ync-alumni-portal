@@ -65,18 +65,22 @@
 				</h3>
 				<p class="grid__card--info">
 					<span ng-show="user.role && user.employer">
-					{{user.role}} at {{user.employer}}
-					<br/>
+						{{user.role}} at {{user.employer}}
+						<br/>
 					</span>
 					Class of {{user.class}}, {{user.major}} major
 					<br/>	
-					Currently in {{user.city}}
-					<br/>
+					<span ng-show="user.city">
+						Currently in {{user.city}}
+						<br/>
+					</span>
 					<br/>
 					<md-divider></md-divider>
 					<br/>
-					Once a part of:
-					<br/>
+					<span ng-show="user.memberships">
+						Once a part of:
+						<br/>
+					</span>
 					<span ng-repeat="membership in user.memberships">{{membership.club}}<br/></span>
 				</p>
 			</md-card-content>
