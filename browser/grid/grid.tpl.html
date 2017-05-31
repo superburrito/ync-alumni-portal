@@ -7,21 +7,20 @@
 		md-theme="darkorange" 
 		layout="row" 
 		layout-padding
-		ng-show="myProfile.class"
 	>
 		<md-button 
 			class="grid__toolbar--button"
 			ng-show="!myProfile.class"
 			ui-sref="update"
 		>
-			Add My Profile
+			Add/Update Profile
 		</md-button>
 		<md-button 
 			class="grid__toolbar--button"
 			ng-show="myProfile.class"
 			ng-click="removeProfile()"
 		>
-			Remove My Profile
+			Remove Profile
 		</md-button>
 	</md-content>
 	<br/>
