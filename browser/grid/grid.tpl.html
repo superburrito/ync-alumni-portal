@@ -71,15 +71,13 @@
 					Class of {{user.class}}, {{user.major}} major
 					<br/>	
 					<span ng-show="user.city">
-						Currently in {{user.city}}
-						<br/>
+						Currently in {{user.city}}<br/>
 					</span>
 					<br/>
 					<md-divider></md-divider>
 					<br/>
-					<span ng-show="user.memberships">
-						Once a part of:
-						<br/>
+					<span ng-show="user.memberships && (user.memberships.length > 0)">
+						Once a part of:<br/>
 					</span>
 					<span ng-repeat="membership in user.memberships">{{membership.club}}<br/></span>
 				</p>

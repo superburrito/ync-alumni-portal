@@ -23,12 +23,15 @@
           </span>
           Class of {{currProfile.class}}, {{currProfile.major}} major
           <br/>
-          Currently in {{currProfile.city}}
-          <br/>
+          <span ng-show="currProfile.city">
+            Currently in {{currProfile.city}}<br/>
+          </span>
           <br/>
           <md-divider></md-divider>
           <br/>
-          Once a part of: <br/>
+          <span ng-show="currProfile.memberships && (currProfile.memberships.length > 0)">
+            Once a part of:<br/>
+          </span>
           <span ng-repeat="membership in currProfile.memberships">{{membership.club}}<br/></span>
         </p>
     </md-dialog-content>
